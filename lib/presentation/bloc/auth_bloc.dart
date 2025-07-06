@@ -64,15 +64,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepository;
 
   AuthBloc({required AuthRepository authRepository})
-      : _authRepository = authRepository,
-        super(AuthInitial()) {
-    
+    : _authRepository = authRepository,
+      super(AuthInitial()) {
     // Listen to auth state changes
     _authRepository.authStateChanges.listen((user) {
       if (user != null) {
         add(AuthCheckStatus());
       } else {
-        emit(AuthUnauthenticated());
+        add(AuthSignOut());
       }
     });
 
